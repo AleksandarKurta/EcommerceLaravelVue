@@ -27,13 +27,15 @@
                       <td>{{ user.id }}</td>
                       <td>{{ user.name }}</td>
                       <td>{{ user.email }}</td>
-                      <td><span class="tag tag-success">{{ user.type }}</span></td>
-                      <td>{{ user.created_at }}</td>
+                      <td><span class="tag tag-success">{{ user.type | TextUppercase }}</span></td>
+                      <td>{{ user.created_at | dateFilter }}</td>
                       <td>
                           <i class="fa fa-edit orange"></i>
                       </td>
                       <td>
-                          <i class="fa fa-trash red"></i>
+                          <button class="btn btn-danger btn-sm" @click="deleteUser(user.id)">
+                             <i class="fa fa-trash"></i>
+                          </button>
                       </td>
                     </tr>
                   </tbody></table>
@@ -78,7 +80,7 @@
                       </div>
                       <div class="form-group">
                         <label>Bio</label>
-                        <textarea name="bio" class="form-control" v-model="form.bio" id="bio" cols="30" rows="10" placeholder="Short Bio for User" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
+                        <textarea name="bio" class="form-control" v-model="form.bio" id="bio" cols="30" rows="5" placeholder="Short Bio for User" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
                         <has-error :form="form" field="bio"></has-error>
                       </div>
                       <div class="form-group">
@@ -120,11 +122,52 @@
               .then(({ data }) => (this.users = data.data))
           },
           createUser() {
-            this.form.post('api/users');
+            this.$Progress.start()
+            this.form.post('api/users')
+              .then(() => {
+                Fire.$emit('afterCreate');
+                toast.fire({
+                  type: 'success',
+                  title: 'User created successfully'
+                })
+                this.$Progress.finish()
+                $('#addNew').modal('hide')
+              })
+              .catch(() => {
+
+              });
+          },
+          deleteUser(id) {
+            swal.fire({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                // Send request to the server
+                if(result.value){
+                    this.form.delete('api/user/' + id).then(() => {
+                            swal(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                            )
+                        Fire.$emit('AfterCreate');
+                    }).catch(() => {
+                        swal("Failed!", "There is something wrong.", "warning");
+                    });
+                }
+            })
           }
         },
         created() {
             this.loadUsers();
+            Fire.$on('afterCreate', () => {
+              this.loadUsers()
+            });
         }
     }
 </script>

@@ -13141,7 +13141,7 @@ a.text-muted:hover {
 
 .elevation-5 {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-}@charset "UTF-8";
+}
 
 .blue {
   color: #3490dc;
@@ -32614,6 +32614,10 @@ readers do not read off random characters that represent icons */
 }
 
 body.modal-open {
+  padding-right: 0 !important;
+}
+
+body.swal2-shown {
   padding-right: 0 !important;
 }
 

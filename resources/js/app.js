@@ -11,6 +11,8 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router'
 import { Form, HasError, AlertError } from 'vform'
 import { routes } from './routes'
+import moment from 'moment'
+import VueProgressBar from 'vue-progressbar'
 
 Vue.use(VueRouter)
 
@@ -21,7 +23,48 @@ Vue.component(AlertError.name, AlertError)
 const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
+});
+
+// Filter - first char to uppercase
+Vue.filter('TextUppercase', function(text){
+    return text[0].toUpperCase() + text.slice(1);
+});
+
+// Filter - date
+Vue.filter('dateFilter', function(date){
+    return moment(date).format('MMMM Do YYYY');
 })
+
+// Vue Progress bar
+const options = {
+    color: '#bffaf3',
+    failedColor: '#874b4b',
+    thickness: '5px',
+    transition: {
+      speed: '0.5s',
+      opacity: '0.6s',
+      termination: 300
+    },
+    autoRevert: true,
+    location: 'top',
+    inverse: false
+  }
+Vue.use(VueProgressBar, options)
+
+// SweetAlert
+import swal from 'sweetalert2'
+window.swal = swal;
+
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+window.toast = toast;
+
+// Fire global event
+window.Fire = new Vue();
 
 /**
  * The following block of code may be used to automatically register your
