@@ -18,3 +18,17 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+.router-link-active {
+  background-color: #007bff;
+  color: #fff !important;
+}
+
+.router-link-active:hover {
+  background-color: #007bff !important;
+  color: #fff !important;
+}
+
+body.modal-open {
+  padding-right: 0 !important;
+}
