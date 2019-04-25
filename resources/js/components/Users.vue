@@ -189,7 +189,7 @@
                 $('#addNew').modal('hide')
                 toast.fire({
                   type: 'success',
-                  title: 'User created successfully'
+                  title: 'User edited successfully'
                 })
                 this.$Progress.finish()
                 Fire.$emit('afterCreate');

@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
               <p>
-                Management
+                User Management
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
@@ -107,6 +107,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 Simple Link
               </p>
             </a>
+          </li>
+          <li class="nav-item">
+            <router-link to="/brands" class="nav-link">
+              <i class="nav-icon fa fa-copyright purple"></i>
+              <p>
+                Brands
+              </p>
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link to="/profile" class="nav-link">
