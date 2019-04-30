@@ -13,6 +13,7 @@ import { Form, HasError, AlertError } from 'vform'
 import { routes } from './routes'
 import moment from 'moment'
 import VueProgressBar from 'vue-progressbar'
+import PrettyCheckbox from 'pretty-checkbox-vue';
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,8 @@ Vue.filter('TextUppercase', function(text){
 Vue.filter('dateFilter', function(date){
     return moment(date).format('MMMM Do YYYY');
 })
+
+Vue.use(PrettyCheckbox);
 
 // Vue Progress bar
 const options = {

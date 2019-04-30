@@ -1,3 +1,7 @@
 .swal2-shown {
     padding-right: 0 !important;
 }
+
+.checkbox {
+    background-color: red;
+}

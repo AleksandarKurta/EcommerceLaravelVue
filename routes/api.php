@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources(['users' => 'API\UsersController']);
 Route::apiResources(['brands' => 'API\BrandsController']);
 Route::apiResources(['categories' => 'API\CategoriesController']);
+Route::apiResources(['products' => 'API\ProductsController']);

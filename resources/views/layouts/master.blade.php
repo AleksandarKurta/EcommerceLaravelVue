@@ -110,7 +110,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <router-link to="/brands" class="nav-link">
-              <i class="nav-icon fa fa-copyright purple"></i>
+              <i class="nav-icon fa fa-list-alt"></i>
               <p>
                 Brands
               </p>
@@ -118,9 +118,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </li>
           <li class="nav-item">
             <router-link to="/categories" class="nav-link">
-              <i class="nav-icon fa fa-list-alt"></i>
+              <i class="nav-icon fa fa-copyright purple"></i>
               <p>
                 Categories
+              </p>
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/products" class="nav-link">
+              <i class="nav-icon fa fa-product-hunt"></i>
+              <p>
+                Products
               </p>
             </router-link>
           </li>
