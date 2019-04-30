@@ -92,5 +92,7 @@ class ProductsController extends Controller
         $product = Product::findOrFail($id);
 
         $product->delete();
+
+        $product->categories()->detach();
     }
 }
