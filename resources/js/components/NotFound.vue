@@ -1,0 +1,20 @@
+<template>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 mt-5">
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Error - 404!</h4>
+                    <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+                    <hr>
+                    <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+   
+    }
+</script>

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="row">
+        <div class="row" v-if="$gate.isAdminOrIsAuthor()">
           <div class="col-md-12 mt-5">
             <div class="card">
               <div class="card-header">
@@ -46,6 +46,10 @@
             </div>
             <!-- /.card -->
           </div>
+        </div>
+
+        <div v-else>
+          <app-not-found></app-not-found>
         </div>
 
         <!-- Modal -->
@@ -124,8 +128,10 @@
         },
         methods: {
           loadUsers(){
-            axios.get('api/users')
+            if(this.$gate.isAdminOrIsAuthor()){
+              axios.get('api/users')
               .then(({ data }) => (this.users = data.data))
+            }
           },
           createUser() {
             this.$Progress.start()
@@ -166,7 +172,12 @@
                     Fire.$emit('afterCreate');
                 })
                 .catch(() => {
-                  swal("Failed", "There was something wrong", "warning")
+                    swal.fire(
+                      'Fail!',
+                      'Error.',
+                      'error'
+                    )
+                  this.$Progress.fail()
                 })
               }
             })

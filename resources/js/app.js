@@ -14,6 +14,7 @@ import { routes } from './routes'
 import moment from 'moment'
 import VueProgressBar from 'vue-progressbar'
 import PrettyCheckbox from 'pretty-checkbox-vue';
+import Gate from './Gate';
 
 Vue.use(VueRouter)
 
@@ -68,6 +69,15 @@ window.toast = toast;
 
 // Fire global event
 window.Fire = new Vue();
+
+//Gate Auth
+Vue.prototype.$gate = new Gate(window.user);
+
+//Register global component
+Vue.component(
+    'app-not-found',
+    require('./components/NotFound.vue').default
+);
 
 /**
  * The following block of code may be used to automatically register your

@@ -60,7 +60,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="{{ asset('img/avatar.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-            <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+            <span class="text-white">{{ Auth::user()->name }}</span><br>
+            <span class="text-white">{{ Auth::user()->type }}</span>
         </div>
       </div>
 
@@ -77,6 +78,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </p>
             </router-link>
           </li>
+
+          @can('isAdmin')
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
@@ -100,14 +103,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+          
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <router-link to="/developer" class="nav-link">
               <i class="nav-icon fa fa-th"></i>
               <p>
-                Simple Link
+                Developer
               </p>
-            </a>
+            </router-link >
           </li>
+          @endcan
+          
           <li class="nav-item">
             <router-link to="/brands" class="nav-link">
               <i class="nav-icon fa fa-list-alt"></i>
@@ -200,6 +206,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+
+@auth  
+<script>
+   window.user = @json(auth()->user())
+</script> 
+@endauth
 
 <script src="{{ asset('js/app.js')}}"></script>
 </body>

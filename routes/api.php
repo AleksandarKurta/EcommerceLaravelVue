@@ -21,3 +21,5 @@ Route::apiResources(['users' => 'API\UsersController']);
 Route::apiResources(['brands' => 'API\BrandsController']);
 Route::apiResources(['categories' => 'API\CategoriesController']);
 Route::apiResources(['products' => 'API\ProductsController']);
+Route::get('profile', 'API\UsersController@profile');
+Route::put('profile', 'API\UsersController@updateProfile');
