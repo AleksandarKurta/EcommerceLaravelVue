@@ -21,6 +21,9 @@ Vue.use(VueRouter)
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
+Vue.component('pagination', require('laravel-vue-pagination'));
+
+Vue.component('welcome', require('./components/Welcome.vue').default );
 
 const router = new VueRouter({
     mode: 'history',
@@ -100,5 +103,16 @@ Vue.component(
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    data: {
+        search: ''
+    },
+    methods: {
+        searchit: _.debounce(() => {
+            Fire.$emit('searching');
+        }, 300),
+        printme() {
+            window.print();
+        }          
+    }
 });

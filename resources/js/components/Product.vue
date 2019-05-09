@@ -23,7 +23,7 @@
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
-                    <tr v-for="product in products" :key="product.id">
+                    <tr v-for="product in products.data" :key="product.id">
                       <td>{{ product.id }}</td>
                       <td>{{ product.name }}</td>
                       <td>{{ product.brand.name }}</td>
@@ -134,7 +134,7 @@
         methods: {
             loadProducts() {
               axios.get('api/products')
-                .then((data) => (this.products = data.data))
+                .then((data) => (this.products = data))
             },
             loadBrands(){
               axios.get('api/brands')

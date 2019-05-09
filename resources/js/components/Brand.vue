@@ -21,7 +21,7 @@
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
-                    <tr v-for="brand in brands" :key="brand.id">
+                    <tr v-for="brand in brands.data" :key="brand.id">
                       <td>{{ brand.id }}</td>
                       <td>{{ brand.name }}</td>
                       <td>{{ brand.created_at | dateFilter }}</td>
@@ -39,10 +39,13 @@
                   </tbody></table>
                 </div>
               <!-- /.card-body -->
-            </div>
+              <div class="card-footer">
+                <pagination :data="brands" @pagination-change-page="getResults"></pagination>
+              </div>
+              </div>
             <!-- /.card -->
+            </div>
           </div>
-        </div>
 
         <!-- Modal -->
         <div class="modal fade" id="addNew" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
@@ -89,9 +92,15 @@
           }
         },
         methods: {
+          getResults(page = 1) {
+            axios.get('api/brands?page=' + page)
+              .then(response => {
+                this.brands = response.data;
+              });
+          },
           loadBrands(){
             axios.get('api/brands')
-              .then(({ data }) => (this.brands = data.data))
+              .then(({ data }) => (this.brands = data))
           },
           createBrandModal(){
             this.editModal = false;

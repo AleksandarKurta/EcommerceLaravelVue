@@ -21,7 +21,7 @@
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
-                    <tr v-for="category in categories" :key="category.id">
+                    <tr v-for="category in categories.data" :key="category.id">
                       <td>{{ category.id }}</td>
                       <td>{{ category.name }}</td>
                       <td>{{ category.created_at }}</td>
@@ -39,6 +39,9 @@
                   </tbody></table>
                 </div>
               <!-- /.card-body -->
+              <div class="card-footer">
+                <pagination :data="categories" @pagination-change-page="getResults"></pagination>
+              </div>
             </div>
             <!-- /.card -->
           </div>
@@ -89,9 +92,15 @@
           }
         },
         methods: {
+           getResults(page = 1) {
+            axios.get('api/categories?page=' + page)
+              .then(response => {
+                this.categories = response.data;
+              });
+          },
           loadCategories() {
             axios.get('api/categories')
-              .then(({data}) => this.categories = data.data)
+              .then(({data}) => this.categories = data)
           },
           createCategoryModal() {
             this.editModal = false;

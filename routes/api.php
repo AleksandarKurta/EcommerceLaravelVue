@@ -23,3 +23,4 @@ Route::apiResources(['categories' => 'API\CategoriesController']);
 Route::apiResources(['products' => 'API\ProductsController']);
 Route::get('profile', 'API\UsersController@profile');
 Route::put('profile', 'API\UsersController@updateProfile');
+Route::get('findUser', 'API\UsersController@search');

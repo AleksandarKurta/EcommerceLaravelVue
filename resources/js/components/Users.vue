@@ -23,7 +23,7 @@
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
-                    <tr v-for="user in users" :key="user.id">
+                    <tr v-for="user in users.data" :key="user.id">
                       <td>{{ user.id }}</td>
                       <td>{{ user.name }}</td>
                       <td>{{ user.email }}</td>
@@ -43,6 +43,9 @@
                   </tbody></table>
                 </div>
               <!-- /.card-body -->
+              <div class="card-footer">
+                <pagination :data="users" @pagination-change-page="getResults"></pagination>
+              </div>
             </div>
             <!-- /.card -->
           </div>
@@ -127,10 +130,16 @@
           }
         },
         methods: {
+          getResults(page = 1) {
+            axios.get('api/users?page=' + page)
+              .then(response => {
+                this.users = response.data;
+              });
+          },
           loadUsers(){
             if(this.$gate.isAdminOrIsAuthor()){
               axios.get('api/users')
-              .then(({ data }) => (this.users = data.data))
+              .then(({ data }) => (this.users = data))
             }
           },
           createUser() {
@@ -211,6 +220,16 @@
           }
         },
         created() {
+            Fire.$on('searching', () => {
+                let query = this.$parent.search;
+                axios.get('api/findUser?q=' + query)
+                .then((data) => {
+                    this.users = data.data
+                })
+                .catch(() => {
+
+                })
+            });
             this.loadUsers();
             Fire.$on('afterCreate', () => {
               this.loadUsers()
