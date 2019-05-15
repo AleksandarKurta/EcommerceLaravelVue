@@ -16,6 +16,7 @@
                   <tbody>
                     <tr>
                       <th>ID</th>
+                      <th>Image</th>
                       <th>Name</th>
                       <th>Brand</th>
                       <th>Price</th>
@@ -25,11 +26,13 @@
                     </tr>
                     <tr v-for="product in products.data" :key="product.id">
                       <td>{{ product.id }}</td>
+                      <td class="product-img">
+                        <img v-bind:src="product.image" alt="Img">
+                      </td>
                       <td>{{ product.name }}</td>
                       <td>{{ product.brand.name }}</td>
                       <th>{{ product.price }}</th>
                       <th>{{ product.created_at | dateFilter }}</th>
-                      <td></td>
                       <td>
                         <button class="btn btn-warning btn-sm" @click="editProductModal(product)">
                           <i class="fa fa-edit"></i>
@@ -70,13 +73,19 @@
                       <div class="form-group">
                         <label for="brand">Select Brand</label>
                         <select name="brand" class="form-control" v-model="form.brand_id" id="type" :class="{ 'is-invalid': form.errors.has('brand') }">
-                          <option v-for="brand in brands" v-bind:value="brand.id">{{ brand.name }}</option>
+                          <option v-for="brand in brands" v-bind:value="brand.id" :key="brand.id">{{ brand.name }}</option>
                         </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="image" class="control-label">Image</label>
+                        <div>
+                          <input type="file" @change="addImage" name="image" class="form-input">
+                        </div>
                       </div>
                       <div class="form-group">
                       <label for="category">Select Categories</label><br>
   
-                        <div v-for="category in allCategories">
+                        <div v-for="category in allCategories" :key="category.id">
                           <label>
                               <input
                                       type="checkbox"
@@ -127,6 +136,7 @@
                     categories: [],
                     price: '',
                     description: '',
+                    image: '',
                     created_at: ''
                 })
             }
@@ -220,6 +230,21 @@
                     })
                   }
                 })
+            },
+            addImage(e) {
+              let file = e.target.files[0];
+              let reader = new FileReader();
+              if(file['size'] > 2111175){
+                  toast.fire({
+                    type: 'error',
+                    title: 'File size should not be larger than 2MB'
+                  })
+              }else{
+                reader.onloadend = (file) => {
+                  this.form.image = reader.result;
+                }
+                reader.readAsDataURL(file);
+              }
             }
         },
         created() {

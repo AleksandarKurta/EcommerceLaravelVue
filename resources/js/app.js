@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import VueRouter from 'vue-router'
+import Vuex from 'vuex';
 import { Form, HasError, AlertError } from 'vform'
 import { routes } from './routes'
 import moment from 'moment'
@@ -17,6 +18,7 @@ import PrettyCheckbox from 'pretty-checkbox-vue';
 import Gate from './Gate';
 
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
 window.Form = Form;
 Vue.component(HasError.name, HasError)
@@ -100,6 +102,8 @@ Vue.component(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
+Vue.component('front-products', require('./components/FrontProducts.vue').default);
 
 const app = new Vue({
     el: '#app',

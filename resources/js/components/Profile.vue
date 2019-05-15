@@ -161,7 +161,7 @@
             }else{
               swal.fire(
                 'Oops...!',
-                'File size could not be larger than 2MB',
+                'File size should not be larger than 2MB',
                 'error'
               )
             }

@@ -33,12 +33,19 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+
         $attributes = request()->validate([
             'name' => 'required|string',
             'brand_id' => 'required',
             'price' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'image' => 'sometimes|required'
         ]);
+
+        $imageName = time(). '.' . explode('/', explode(':', \substr($attributes['image'], 0, strpos($attributes['image'], ';')))[1])[1];
+        \Image::make($attributes['image'])->save(public_path('img/products/').$imageName);
+
+        $attributes['image'] = 'img/products/' . $imageName;
 
         $product = Product::create($attributes);
 
@@ -75,6 +82,20 @@ class ProductsController extends Controller
             'price' => 'required',
             'description' => 'required',
         ]);
+
+        $currentImage = $product->image;
+        $attributes['image'] = $request->image; 
+        if($attributes['image'] != $currentImage){
+            $imageName = time(). '.' . explode('/', explode(':', \substr($attributes['image'], 0, strpos($attributes['image'], ';')))[1])[1];
+
+            \Image::make($attributes['image'])->save(public_path('img/products/').$imageName);
+
+            $productImage = public_path('img/products/').$currentImage;
+            if(file_exists($productImage)){
+                unlink($productImage);
+            }
+            $attributes['image'] = 'img/products/' . $imageName;
+        }
 
         $product->update($attributes);
         
